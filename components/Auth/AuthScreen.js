@@ -40,6 +40,13 @@ export default function AuthScreen(){
             >
                 <Text style={[styles.entryPageText,styles.outlineText]}>Register</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={()=>{navigation.navigate("TestScreen")}}
+                style={styles.entryPageButton}
+            >
+                <Text style={styles.entryPageText}>TEST</Text>
+            </TouchableOpacity>
             
         </View>
     )
