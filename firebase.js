@@ -8,6 +8,15 @@ import {
   signOut
 } from "firebase/auth"
 
+//firestore -- database methods and functions
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  doc,
+  updateDoc
+} from "firebase/firestore"
+
 import {
   initializeAuth,
   getReactNativePersistence
@@ -27,6 +36,30 @@ const app = initializeApp(firebaseConfig);
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage)
 });
+const firestore = getFirestore()
+
+const userCollection = collection(firestore, "users")
+
+async function addUserId(mail,username,points,visited,id){
+
+  await updateDoc(doc(firestore,"users",id),{
+    username:username,
+    mail:mail,
+    points:points,
+    visited:visited,
+    id:id
+  })
+}
+async function addNewUser(username, mail){
+  const newUser = await addDoc(userCollection,{
+    username:username,
+    mail:mail,
+    points:0,
+    visited:[],
+    id:""
+  }).then(res=>addUserId(mail,username,0,[],res.id))
+  
+}
 
 export {
   //functii pt autentificare
@@ -35,5 +68,7 @@ export {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
-  getAuth
+  getAuth,
+
+  addNewUser
 }

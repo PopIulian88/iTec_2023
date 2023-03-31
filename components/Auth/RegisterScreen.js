@@ -33,7 +33,7 @@ export default function Register(){
         .then((userCredentials) => {
             const user = userCredentials.user;
             console.log("Registered with "+user.email)
-            //addNewUser(username,email)
+            addNewUser(username,email)
             setEmail("")
             setPassword("")
             setUsername("")
