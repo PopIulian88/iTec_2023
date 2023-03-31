@@ -3,7 +3,7 @@ Aplicatie care sa ajute turismul in timisoara
 Idee: un fel de joc in care turistul viziteaza si primeste puncte pentru obiectivele turstice pe care le-a vizitat
 
 Sub idei:
--checkin la locatia la care se alfa pentru a justifica faptul ca a vizitat sau a participat la un eveniment
+
 
 -modalitate de capatat xp in functie de ce viziteaza, fara challangeuri
 

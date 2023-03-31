@@ -40,6 +40,7 @@ export default function AuthScreen(){
             >
                 <Text style={[styles.entryPageText,styles.outlineText]}>Register</Text>
             </TouchableOpacity>
+
             
         </View>
     )
