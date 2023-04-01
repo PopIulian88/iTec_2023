@@ -27,9 +27,10 @@ export default function ObjectiveComponent({photoLink,nameObj,score,address,lat,
                 <Image style={objectiveStyles.photoEdit} source={{uri: photoLink}}/>
             </View>
             <View style={{ flexDirection: "column",width:"50%"}}>
-                <Text style={{justifyContent: "center"}}>{nameObj}</Text>
-                <Text style={{fontWeight: "bold"}}>Points: {score}</Text>
-
+                <Text style={{justifyContent: "center", color: "#00235B"}}>{nameObj}</Text>
+                <Text style={{fontWeight: "bold"}}>Points:
+                    <Text style={{fontWeight: "bold", color: "green"}}> {score}</Text>
+                </Text>
             </View>
 
         </TouchableOpacity>

@@ -5,9 +5,11 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         width:"100%",
+        backgroundColor: "#e6e6ff",
     },
     username:{
-        fontSize:48
+        fontSize:48,
+        color: "#00235B",
     }
 })
 

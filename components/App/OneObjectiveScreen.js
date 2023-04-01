@@ -1,8 +1,9 @@
 import {View, Text, ScrollView, Image, TextComponent, Linking, TouchableOpacity,Platform} from "react-native";
 import {oneObjectiveStyles} from "../../styles/homeStyleComp/oneObjectStyle";
 import Spacer from "../helpers/Spacer";
-import {MaterialIcons} from "@expo/vector-icons";
+import {Foundation, MaterialIcons} from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
+import miniComponentTags from "./homeComponents/miniComponentTags";
 
 export function useLocation(lat,long){
     if(Platform.OS == 'ios'){
@@ -13,7 +14,7 @@ export function useLocation(lat,long){
 }
 
 export default function OneObjectiveScreen({route}) {
-    console.log(route.params.website);
+
     const navigator = useNavigation()
     return (
         <ScrollView style={oneObjectiveStyles.container} showsVerticalScrollIndicator={false}>
@@ -21,13 +22,24 @@ export default function OneObjectiveScreen({route}) {
             <Image style={oneObjectiveStyles.photoEdit} source={{uri: route.params.photoLink}}/>
             <Text style={oneObjectiveStyles.titleText}>{route.params.nameObj}</Text>
 
+            <View style={{flexDirection: "row"}}>
+                {route.params.tags.map(e => {
+                    return miniComponentTags(e)
+                })}
+            </View>
+
             <Spacer height={20}/>
 
             {
-                route.params.website!="null" ?
-                <MaterialIcons 
+                route.params.website !== "null" ?
+                    <Text style={{alignSelf: "center"}}>Vizualizati website-ul oficial</Text>:<Text></Text>
+            }
+
+            {
+                route.params.website!=="null" ?
+                <Foundation
                     onPress={() => Linking.openURL(route.params.website)}
-                    name="info" 
+                    name="web"
                     size={100} 
                     color="#7149C6" 
                     style={{alignSelf: "center"}} 
@@ -43,7 +55,7 @@ export default function OneObjectiveScreen({route}) {
 
             <Spacer height={20}/>
 
-            <Text style={{color: "green", fontWeight: "bold", fontSize: 18}}>Reward: {route.params.score}</Text>
+            <Text style={{color: "green", fontWeight: "bold", fontSize: 18}}>   Reward: {route.params.score}</Text>
 
             <Spacer height={30}/>
 

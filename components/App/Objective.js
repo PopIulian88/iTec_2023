@@ -58,6 +58,7 @@ export default function Objective() {
                         )
                     })
                 }
+                <Spacer height={50}/>
             </ScrollView>
         </View>
     )
