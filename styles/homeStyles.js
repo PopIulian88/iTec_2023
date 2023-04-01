@@ -3,10 +3,10 @@ import {Entypo, FontAwesome, MaterialIcons} from "@expo/vector-icons";
 
 const homeStyles = StyleSheet.create({
     tabBarOptions: {
-        activeTintColor: "white",
+        activeTintColor: "black",
         inactiveTintColor: 'lightgray',
-        activeBackgroundColor: "#AA77FF",
-        inactiveBackgroundColor: '#7149C6',
+        activeBackgroundColor: "#ffffff",
+        inactiveBackgroundColor: '#ffffff',
     },
 
     challengeOption: {

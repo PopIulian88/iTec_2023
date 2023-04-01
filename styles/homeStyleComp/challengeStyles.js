@@ -5,7 +5,7 @@ const challangeStyles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#e6e6ff",
+        backgroundColor: "white",
     },
 
 })

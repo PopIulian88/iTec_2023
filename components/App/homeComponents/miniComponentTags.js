@@ -6,8 +6,8 @@ export default function miniComponentTags(cuv) {
 
     return (
         <View style={{flexDirection: "row", paddingLeft: 20}}>
-            <Spacer height={20}/>
-            <Text style={{backgroundColor: "#B0DAFF", fontSize: 16, borderRadius: 10}}> #{cuv} </Text>
+            <Spacer height={25}/>
+            <Text style={{backgroundColor: "#B0DAFF", fontSize: 16, borderRadius: 10}}> {cuv} </Text>
         </View>
     )
 }

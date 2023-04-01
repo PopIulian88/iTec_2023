@@ -25,7 +25,7 @@ export default function App() {
 
     const homeStackNavigator = () => {
       return  <Stack.Navigator initialRouteName={"Home"}>
-          <Stack.Screen name="Home" component={Home}/>
+          <Stack.Screen options={{headerShown:false}} name="Home" component={Home}/>
           <Stack.Screen options={{headerShown:false}} name={"OneObjectiveScreen"} component={OneObjectiveScreen}/>
           <Stack.Screen options={{headerShown:false}} name={"CollectRewardScreen"} component={CollectReward}/>
           </Stack.Navigator>
