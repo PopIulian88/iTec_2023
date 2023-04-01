@@ -25,7 +25,7 @@ export default function AuthScreen(){
     })
 
     return(
-        <View style={[styles.container,{justifyContent:"flex-start",backgroundColor:"#2e2b2a"}]}>
+        <View style={styles.container}>
             <Spacer height={100}/>
             
             <TouchableOpacity
@@ -34,6 +34,9 @@ export default function AuthScreen(){
             >
                 <Text style={styles.entryPageText}>Login</Text>
             </TouchableOpacity>
+
+            <Spacer height={30}/>
+
             <TouchableOpacity
                 onPress={()=>{navigation.navigate("RegisterScreen")}}
                 style={[styles.entryPageButton,styles.outlineButton]}
