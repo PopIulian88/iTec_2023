@@ -1,47 +1,22 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from  '@react-navigation/native-stack';
+import React from 'react'
+import {homeStyles} from "../../styles/homeStyles"
 
-import Auth from "./components/Auth/Auth"
-import Home from "./components/App/Home";
-import OneObjectiveScreen from "./components/App/OneObjectiveScreen";
-import CollectReward from './components/App/CollectReward';
-import {auth, onAuthStateChanged} from "./firebase";
-import {useEffect, useState} from "react";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import Challenge from "./Challenge";
+import Objective from "./Objective";
+import Profile from "./Profile";
 
-const Stack = createNativeStackNavigator()
+const Tab = createBottomTabNavigator();
 
-
-
-export default function App() {
-    const [isLogged, setIsLogged] = useState(!!auth.name)
-    useEffect(()=>{
-        onAuthStateChanged(auth, user=>{
-            console.log("** app L19", user);
-            if(user){
-                setIsLogged(true)
-            }else{
-                setIsLogged(false)
-            }
-        })
-    })
-
+export default function Home() {
   return (
-    <NavigationContainer>
-        {isLogged ? homeStackNavigator() : signinStackNavigator()}
-    </NavigationContainer>
-  );
-}
 
-const homeStackNavigator = () => {
-    return  <Stack.Navigator initialRouteName={"Home"}>
-        <Stack.Screen options={{headerShown:false}} name="Home" component={Home}/>
-        <Stack.Screen options={{headerShown:false}} name={"OneObjectiveScreen"} component={OneObjectiveScreen}/>
-        <Stack.Screen options={{headerShown:false}} name={"CollectRewardScreen"} component={CollectReward}/>
-        </Stack.Navigator>
-}
+      <Tab.Navigator tabBarOptions={homeStyles.tabBarOptions}>
 
-const signinStackNavigator = () => {
-    return <Stack.Navigator>
-        <Stack.Screen options={{headerShown: false}} name={"Auth"} component={Auth}/>
-    </Stack.Navigator>
+          <Tab.Screen name={"Challenge"} component={Challenge} options={homeStyles.challengeOption}/>
+          <Tab.Screen name={"Objective"} component={Objective} options={homeStyles.objectiveption}/>
+          <Tab.Screen name={"Profile"} component={Profile} options={homeStyles.profileOption}/>
+
+      </Tab.Navigator>
+  )
 }
