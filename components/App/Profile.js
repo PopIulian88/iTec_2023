@@ -61,35 +61,7 @@ export default function Profile() {
     }
 
   return (
-    <ScrollView 
-        contentContainerStyle={styles.container}
-        refreshControl={
-            <RefreshControl onRefresh={
-                ()=>{
-                    setGetting(true)
-                    if(getting){
-                        getUser(auth.currentUser?.email).then(res=>{
-                            setUsername(res.username)
-                            setImagesDB(res.photos)
-                            setPoints(res.points)
-                            setUserID(res.id)
-                
-                            imagesDB.map(el=>{
-                                async () => {let ref = firebase.storage().ref(el)
-                                let url = await ref.getDownloadURL();
-                                let aux =  [url] 
-                                aux = aux + images
-                                setImages(aux)
-                                }
-                            })
-                            console.log(res)
-                        })
-                        setGetting(false)
-                    }
-                }
-            }/>
-        }
-    >
+    <View style={styles.container}>
         <Spacer height={40}/>
         <View style={{width: "95%", flexDirection: "row", justifyContent: "space-between"}}>
             <Text style={styles.username}>{username}</Text>
@@ -110,7 +82,32 @@ export default function Profile() {
             imagesDB!==undefined?
             <ScrollView 
                 showsVerticalScrollIndicator={false}
-                snapToAlignment='center'    
+                snapToAlignment='center'
+                refreshControl={
+                    <RefreshControl onRefresh={
+                        ()=>{
+                            setGetting(true)
+                            if(getting){
+                                getUser(auth.currentUser?.email).then(res=>{
+                                    setUsername(res.username)
+                                    setImagesDB(res.photos)
+                                    setPoints(res.points)
+                                    setUserID(res.id)
+                        
+                                    imagesDB.map(el=>{
+                                        async () => {let ref = firebase.storage().ref(el)
+                                        let url = await ref.getDownloadURL();
+                                        let aux =  [url] 
+                                        aux = aux + images
+                                        setImages(aux)
+                                        }
+                                    })
+                                    console.log(res)
+                                })
+                                setGetting(false)
+                            }
+                        }
+                    }/>}    
             >
             {
                 imagesDB.map(el=>{
@@ -124,6 +121,6 @@ export default function Profile() {
             }
         </ScrollView>:<Text></Text>
         }
-    </ScrollView>
+    </View>
   )
 }

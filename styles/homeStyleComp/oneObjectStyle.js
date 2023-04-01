@@ -13,7 +13,7 @@ const oneObjectiveStyles = StyleSheet.create({
         borderRadius: 50,
         height: 300,
         width: 300,
-        resizeMode: "stretch",
+        resizeMode: "cover",
     },
 
     titleText: {
