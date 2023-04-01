@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         width:"100%",
-        backgroundColor: "#e6e6ff",
+        backgroundColor: "white",
     },
     username:{
         fontSize:48,

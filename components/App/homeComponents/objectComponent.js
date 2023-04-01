@@ -14,7 +14,7 @@ export default function ObjectiveComponent({photoLink,nameObj,score,address,lat,
             onPress={() => navigator.navigate('OneObjectiveScreen', {
                 photoLink: photoLink,
                 nameObj: nameObj,
-                score: score,
+                points: score,
                 address: address,
                 website: website,
                 tags: tags,
