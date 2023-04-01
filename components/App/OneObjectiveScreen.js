@@ -1,7 +1,7 @@
-import {View, Text, ScrollView, Image, TextComponent, Linking, TouchableOpacity,Platform} from "react-native";
+import {View, Text, ScrollView, ImageBackground, Linking, TouchableOpacity,Platform, Image} from "react-native";
 import {oneObjectiveStyles} from "../../styles/homeStyleComp/oneObjectStyle";
 import Spacer from "../helpers/Spacer";
-import {Foundation, MaterialIcons} from "@expo/vector-icons";
+import {Entypo, Foundation, MaterialIcons} from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import miniComponentTags from "./homeComponents/miniComponentTags";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import {
     verifyVisited,
     auth
 } from "../../firebase"
+import {LinearGradient} from "expo-linear-gradient";
 
 
 export function useLocation(lat,long){
@@ -37,9 +38,9 @@ export default function OneObjectiveScreen({route}) {
 
     return (
         <ScrollView style={oneObjectiveStyles.container} showsVerticalScrollIndicator={false}>
-            <Spacer height={50}/>
+
             <Image style={oneObjectiveStyles.photoEdit} source={{uri: route.params.photoLink}}/>
-            <Text style={oneObjectiveStyles.titleText}>{route.params.nameObj}</Text>
+            <Text style={oneObjectiveStyles.titleText}>   {route.params.nameObj}</Text>
 
             <View style={{flexDirection: "row"}}>
                 {route.params.tags.map(e => {
@@ -49,60 +50,96 @@ export default function OneObjectiveScreen({route}) {
 
             <Spacer height={20}/>
 
-            {
-                route.params.website !== "null" ?
-                    <Text style={{alignSelf: "center"}}>Vizualizati website-ul oficial</Text>:<Text></Text>
-            }
+            <View style={oneObjectiveStyles.rewardContainer}>
+                <View style={{flex: 2, flexDirection: "row"}}>
+                    <View style={{flex: 2, justifyContent: "center"}}>
+                        <Text style={{color: "#fbb040", fontWeight: "bold", fontSize: 24}}> Reward:</Text>
+                        <Text style={{color: "#fbb040", fontWeight: "bold", fontSize: 32}}>  {route.params.score}</Text>
+                    </View>
+                    <View style={{flex:1, alignSelf: "center", justifyContent: "center"}}>
+                        <Image style={{height: "100%", width: "100%"}} source={require("../../styles/images/cupitza.png")}/>
+                    </View>
+                </View>
+                <View style={{flex: 1}}>
+                    {
+                        ok?
 
-            {
-                route.params.website!=="null" ?
-                <Foundation
-                    onPress={() => Linking.openURL(route.params.website)}
-                    name="web"
-                    size={100} 
-                    color="#7149C6" 
-                    style={{alignSelf: "center"}} 
-                />:<Text></Text>
-            }
+                            <TouchableOpacity
+                                style={[oneObjectiveStyles.confirmLocEdit,{backgroundColor:"gray"}]}
+                            >
 
-            <TouchableOpacity 
-                style={oneObjectiveStyles.locationEdit}
-                onPress={() => useLocation(route.params.lat,route.params.long)}
-            >
-                <Text style={{alignSelf: "center", color: "white"}}>Vezi locatia obiectivului</Text>
-            </TouchableOpacity>
+                                <Text style={{alignSelf: "center", color: "white"}}>Recompensa colectata!</Text>
+                            </TouchableOpacity>
 
-            <Spacer height={20}/>
+                            :
 
-            <Text style={{color: "green", fontWeight: "bold", fontSize: 18}}>   Reward: {route.params.score}</Text>
+                            <TouchableOpacity
+                                style={oneObjectiveStyles.confirmLocEdit}
+                                onPress={() => navigator.navigate("CollectRewardScreen",{
+                                    lat:route.params.lat,
+                                    long:route.params.long,
+                                    title:route.params.nameObj,
+                                    points:route.params.points
+                                })}
+                            >
 
-            <Spacer height={30}/>
+                                <Text style={{alignSelf: "center", color: "white"}}>Colecteaza recompensa!</Text>
+                            </TouchableOpacity>
+                    }
+                </View>
+            </View>
 
-            {
-    ok?
-    
-    <TouchableOpacity 
-        style={[oneObjectiveStyles.confirmLocEdit,{backgroundColor:"gray"}]}
-    >
-        
-        <Text style={{alignSelf: "center", color: "white"}}>Recompensa colectata!</Text>
-    </TouchableOpacity>
-    
-    :
-    
-    <TouchableOpacity 
-        style={oneObjectiveStyles.confirmLocEdit}
-        onPress={() => navigator.navigate("CollectRewardScreen",{
-            lat:route.params.lat,
-            long:route.params.long,
-            title:route.params.nameObj,
-            points:route.params.points
-        })}
-    >
-        
-        <Text style={{alignSelf: "center", color: "white"}}>Colecteaza recompensa!</Text>
-    </TouchableOpacity>
-}
+            <Spacer height={50}/>
+
+            <View style={oneObjectiveStyles.rewardContainer}>
+                <View style={{flex: 1, flexDirection: "row"}}>
+                    <View style={{flex: 3}}>
+                        <TouchableOpacity
+                            style={oneObjectiveStyles.locationEdit}
+                            onPress={() => useLocation(route.params.lat,route.params.long)}
+                        >
+                            <Text style={{alignSelf: "center", color: "black"}}>Vezi locatia obiectivului</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{flex: 1}}>
+
+                        <Entypo
+                            onPress={() => useLocation(route.params.lat,route.params.long)}
+                            name="location-pin"
+                            size={70}
+                            color="black"
+                            style={{alignSelf: "center"}}
+                        />
+                    </View>
+                </View>
+                <View style={{flex: 1, flexDirection: "row"}}>
+                    { route.params.website !== "null"?
+                        <>
+                        <View style={{flex: 3}}>
+                            <TouchableOpacity
+                                style={oneObjectiveStyles.locationEdit}
+                                onPress={() => Linking.openURL(route.params.website)}
+                            >
+                                <Text style={{alignSelf: "center", color: "black"}}>Vizualizati website-ul oficial</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{flex: 1}}>
+                    {
+                        route.params.website!=="null" ?
+                        <Foundation
+                        onPress={() => Linking.openURL(route.params.website)}
+                        name="web"
+                        size={70}
+                        color="black"
+                        style={{alignSelf: "center"}}
+                        />:<Text></Text>
+                    }
+                        </View>
+                        </>:<Text></Text>
+                    }
+                </View>
+            </View>
+
         </ScrollView>
     )
 }
