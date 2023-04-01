@@ -3,6 +3,8 @@ import { StyleSheet } from "react-native";
 const objectiveStyles = StyleSheet.create({
     container: {
         alignItems: "center",
+        backgroundColor: "#e6e6ff",
+
     },
 
     objectiveComponent: {
@@ -15,6 +17,16 @@ const objectiveStyles = StyleSheet.create({
         flexDirection:"row",
         alignItems: "center",
         justifyContent: "space-between",
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+
+        elevation: 5,
     },
 
     photoEdit: {

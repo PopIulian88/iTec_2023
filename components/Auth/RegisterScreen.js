@@ -37,7 +37,7 @@ export default function Register(){
             setEmail("")
             setPassword("")
             setUsername("")
-            navigation.navigate("Home")
+           // navigation.replace("Home")
         }).catch(err => alert(err))
     }
 

@@ -30,8 +30,8 @@ export default function Login(){
         signInWithEmailAndPassword(auth,email,password)
         .then(userCredentials => {
             const user = userCredentials.user;
-            console.log("Logged in with "+user.email);
-            navigation.navigate("Home")
+            console.log("** Logged in with "+user.email);
+            //navigation.navigate("Home");
         })
         .catch(error => alert(error.message))
     }

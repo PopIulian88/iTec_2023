@@ -19,13 +19,13 @@ export function percent(points,level){
 export default function LevelBar({points}){
     return (
         <View style={{width:"100%",alignItems:"center"}}>
-            <Text style={{fontSize:24}}> Nivelul: {getLevel(points)}</Text>
-            <View style={{width:"90%",height:20,backgroundColor:"green",borderRadius:50}}>
-                <View style={{height:20,width:String(percent(points,getLevel(points)))+"%",backgroundColor:"pink",borderRadius:50}}>
+            <Text style={{fontSize:24, color: "#00235B"}}> Nivelul: {getLevel(points)}</Text>
+            <View style={{width:"90%",height:20,backgroundColor:"#e6ccff",borderRadius:50}}>
+                <View style={{height:20,width:String(percent(points,getLevel(points)))+"%",backgroundColor:"#b366ff",borderRadius:50}}>
                     <Text></Text>
                 </View>
             </View>
-            <Text style={{fontSize:24}}>Puncte: {points}</Text>
+            <Text style={{fontSize:16, color: "#00235B"}}>Puncte: {points}</Text>
         </View>
     )
 }

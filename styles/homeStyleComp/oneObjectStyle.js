@@ -2,7 +2,9 @@ import { StyleSheet } from "react-native";
 
 const oneObjectiveStyles = StyleSheet.create({
     container: {
+        width: "100%",
         alignSelf: "center",
+        backgroundColor: "#e6e6ff",
     },
 
 
@@ -11,7 +13,7 @@ const oneObjectiveStyles = StyleSheet.create({
         borderRadius: 50,
         height: 300,
         width: 300,
-        resizeMode: "contain",
+        resizeMode: "stretch",
     },
 
     titleText: {
@@ -27,6 +29,18 @@ const oneObjectiveStyles = StyleSheet.create({
         width: "80%",
         height: 50,
         backgroundColor: "#AA77FF",
+
+        borderRadius: 30,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+
+        elevation: 10,
     },
 
     confirmLocEdit: {
@@ -34,7 +48,11 @@ const oneObjectiveStyles = StyleSheet.create({
         justifyContent: "center",
         width: "90%",
         height: 70,
-        backgroundColor: "green",
+        backgroundColor: "#46994e",
+
+        borderRadius: 30,
+
+
     },
 })
 

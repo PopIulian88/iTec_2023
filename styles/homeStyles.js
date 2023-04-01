@@ -9,10 +9,6 @@ const homeStyles = StyleSheet.create({
         inactiveBackgroundColor: '#7149C6',
     },
 
-    navigator: {
-
-    },
-
     challengeOption: {
         headerShown:false,
 

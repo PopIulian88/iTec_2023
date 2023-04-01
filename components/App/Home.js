@@ -11,7 +11,8 @@ const Tab = createBottomTabNavigator();
 export default function Home() {
   return (
 
-      <Tab.Navigator  screenOptions={homeStyles.navigator} tabBarOptions={homeStyles.tabBarOptions}>
+      <Tab.Navigator tabBarOptions={homeStyles.tabBarOptions}>
+
           <Tab.Screen name={"Challenge"} component={Challenge} options={homeStyles.challengeOption}/>
           <Tab.Screen name={"Objective"} component={Objective} options={homeStyles.objectiveption}/>
           <Tab.Screen name={"Profile"} component={Profile} options={homeStyles.profileOption}/>

@@ -1,4 +1,4 @@
-import { ScrollView, Text, View,Image,RefreshControl } from 'react-native'
+import {ScrollView, Text, View, Image, RefreshControl, Linking} from 'react-native'
 import {useState} from 'react'
 import {styles} from "../../styles/homeStyleComp/profileStyles"
 import { TouchableOpacity } from 'react-native'
@@ -12,8 +12,13 @@ import {
     getUser,
     addPhotoToDB
 }from "../../firebase"
+
 import Spacer from '../helpers/Spacer'
 import LevelBar from '../helpers/LevelBar'
+import {Foundation, MaterialCommunityIcons} from "@expo/vector-icons";
+import Auth from "../Auth/Auth";
+
+
 
 export default function Profile() {
 
@@ -46,54 +51,15 @@ export default function Profile() {
     }
 
 
-    const [image, setImage] = useState(null)
-    const [uploading, setUploading] = useState(false)
-
-    //functii de incarcare poze
-
-    // const pickImage = async () => {
-    //   let result = await ImagePicker.launchImageLibraryAsync({
-    //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //     allowsEditing: true,
-    //     aspect: [4, 3],
-    //     quality: 1,
-    //   });
-    //   const source = {uri:result.assets[0].uri}
-    //   console.log(source)
-    //   setImage(source)
-    // }
-
-    // const uploadImage = async () => {
-
-    //   const storage = firebase.storage();
-
-    //   const response = await fetch(image.uri)
-
-    //   const blob = await response.blob()
-      
-    //   const filename = image.uri.substring(image.uri.lastIndexOf('/')+1)
-
-    //   const ref = storage.ref().child(filename);
-      
-    //   const snapshot = await ref.put(blob);
-
-    //   let url = await ref.getDownloadURL();
-
-    //   addPhotoToDB(userID,url)
-        
-    //   setImage(null)
-      
-      
-    // }
-
     const handleSignOut = () => {
         signOut(auth)
         .then(() => {
-            console.log("Logged of" )
-            navigation.replace("AuthScreen")
+            console.log("** Logged of" )
+            //navigation.navigate(Auth)
         })
         .catch(err => alert(err))
     }
+
   return (
     <ScrollView 
         contentContainerStyle={styles.container}
@@ -125,20 +91,23 @@ export default function Profile() {
         }
     >
         <Spacer height={40}/>
-        <Text style={styles.username}>{username}</Text>
+        <View style={{width: "95%", flexDirection: "row", justifyContent: "space-between"}}>
+            <Text style={styles.username}>{username}</Text>
+            <MaterialCommunityIcons
+                onPress={() => handleSignOut()}
+                name="exit-run"
+                size={50}
+                color="#7149C6"
+                style={{alignSelf: "center"}}
+            />
+        </View>
 
         <Spacer height={40}/>
         <LevelBar points={points}/>
-        
-        {/* <TouchableOpacity onPress={pickImage}>
-            <Text>Selecteaza imagine</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={uploadImage}>
-            <Text>Incarca imagine</Text>
-        </TouchableOpacity> */}
+
         <Spacer height={40}/>
         {
-            imagesDB!=undefined?       
+            imagesDB!==undefined?
             <ScrollView 
                 showsVerticalScrollIndicator={false}
                 snapToAlignment='center'    
@@ -147,7 +116,7 @@ export default function Profile() {
                 imagesDB.map(el=>{
                     return(
                         <View>
-                            <Image source={{uri:el}} width={300} height={300}/>
+                            <Image style={{borderRadius: 10}} source={{uri:el}} width={300} height={300}/>
                             <Spacer height={40}/>
                         </View>
                     )

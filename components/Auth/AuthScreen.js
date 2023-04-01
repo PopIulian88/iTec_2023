@@ -19,7 +19,7 @@ export default function AuthScreen(){
     useEffect(()=>{
         onAuthStateChanged(auth, user=>{
             if(user){
-                navigation.navigate("Home")
+             //   navigation.replace("Home")
             }
         })
     })
@@ -29,7 +29,8 @@ export default function AuthScreen(){
             <Spacer height={100}/>
             
             <TouchableOpacity
-                onPress={()=>{navigation.navigate("LoginScreen")}}
+                onPress={()=>{
+                    navigation.navigate("LoginScreen")}}
                 style={styles.entryPageButton}
             >
                 <Text style={styles.entryPageText}>Login</Text>
