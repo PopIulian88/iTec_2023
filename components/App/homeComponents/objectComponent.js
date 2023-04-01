@@ -4,10 +4,25 @@ import React from "react";
 import {objectiveStyles} from "../../../styles/homeStyleComp/objectiveStyles";
 import Objective from "../Objective";
 
-export default function ObjectiveComponent({photoLink, nameObj, score}) {
+import {useNavigation} from "@react-navigation/core";
+import OneObjectiveScreen from "../OneObjectiveScreen";
+
+export default function ObjectiveComponent({photoLink, nameObj, score, adresa, webSite, tags, lat, long}) {
+    const navigator = useNavigation();
 
     return (
-        <TouchableOpacity style={objectiveStyles.objectiveComponent}>
+
+        <TouchableOpacity style={objectiveStyles.objectiveComponent}
+            onPress={() => navigator.navigate('OneObjectiveScreen', {
+                photoLink: photoLink,
+                nameObj: nameObj,
+                score: score,
+                adresa: adresa,
+                webSite: webSite,
+                tags: tags,
+                lat: lat,
+                long: long,
+            })}>
             <View style={{flex: 1}}>
                 <Image style={objectiveStyles.photoEdit} source={{uri: photoLink}}/>
             </View>

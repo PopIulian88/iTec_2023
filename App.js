@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from  '@react-navigation/native-stack';
 
 import Auth from "./components/Auth/Auth"
 import Home from "./components/App/Home";
+import OneObjectiveScreen from "./components/App/OneObjectiveScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -16,6 +17,7 @@ export default function App() {
               name="Home"
               component={Home}
           />
+          <Stack.Screen options={{headerShown:false}} name={"OneObjectiveScreen"} component={OneObjectiveScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
