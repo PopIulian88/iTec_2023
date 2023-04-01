@@ -25,7 +25,7 @@ export default function LevelBar({points}){
                     <Text></Text>
                 </View>
             </View>
-            <Text style={{fontSize:16, color: "#00235B"}}>Puncte: {points}</Text>
+            <Text style={{fontSize:16, color: "#00235B"}}>Puncte: {points}/{getLevel(points)*200}</Text>
         </View>
     )
 }

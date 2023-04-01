@@ -19,7 +19,6 @@ import {Foundation, MaterialCommunityIcons} from "@expo/vector-icons";
 import Auth from "../Auth/Auth";
 
 
-
 export default function Profile() {
 
     const navigation = useNavigation()
@@ -27,6 +26,7 @@ export default function Profile() {
     const [username,setUsername] = useState("")
     const [imagesDB, setImagesDB] = useState([])
     const [images, setImages] = useState([])
+    const [locationPh, setLocationPh] = useState([])
     const [points , setPoints] = useState(0)
     const [userID, setUserID] = useState("")
 
@@ -37,14 +37,8 @@ export default function Profile() {
             setImagesDB(res.photos)
             setPoints(res.points)
             setUserID(res.id)
+            setLocationPh(res.locationPh)
 
-            imagesDB.map(el=>{
-                async () => {let ref = firebase.storage().ref(el)
-                let url = await ref.getDownloadURL();
-                let aux = images + url
-                setImages(aux)
-                }
-            })
             console.log(res)
         })
         setGetting(false)
@@ -111,9 +105,11 @@ export default function Profile() {
             >
             {
                 imagesDB.map(el=>{
+                    
                     return(
                         <View>
                             <Image style={{borderRadius: 10}} source={{uri:el}} width={300} height={300}/>
+                            <Text>{locationPh[imagesDB.indexOf(el)]}</Text>
                             <Spacer height={40}/>
                         </View>
                     )

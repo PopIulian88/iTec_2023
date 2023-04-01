@@ -1,4 +1,4 @@
-import {View, Text,TouchableOpacity, Alert} from "react-native"
+import {View, Text,TouchableOpacity, Alert,ActivityIndicator,Image} from "react-native"
 import {useEffect, useState} from "react";
 import Spacer from "../Spacer";
 import { useNavigation } from "@react-navigation/core";
@@ -14,7 +14,7 @@ import{
 import {styles} from "../../../styles/homeStyleComp/collectRewardStyle"
 
 export function verifyLocation(latOb,longOb,latOm, longOm){
-    console.log(latOb,latOb)
+    console.log(latOb,latOm)
     console.log(longOb,longOm)
     if(latOm >=latOb-0.01 && latOm <=latOb+0.01  && longOm>=longOb-0.01  && longOm<=longOb+0.01 ){
         return true;
@@ -22,12 +22,14 @@ export function verifyLocation(latOb,longOb,latOm, longOm){
     return false
 }
 
-export default function Geolocation({latOb, longOb, title, points}) {
+export default function Geolocation({setCheck, latOb, longOb, title, points}) {
 
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [trigger, setTrigger] = useState(true)
     const [userId, setUserId] = useState("")
+    const [stop, setStop] = useState(false)
+    const [culoare,setCuloare] = useState("gray")
 
     const navigator = useNavigation()
 
@@ -53,6 +55,9 @@ export default function Geolocation({latOb, longOb, title, points}) {
 
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location);
+            setStop(true)
+            setCuloare("#99bf3f")
+            
         })();
     }, []);
 
@@ -67,21 +72,40 @@ export default function Geolocation({latOb, longOb, title, points}) {
     }
 
     return (
-        <TouchableOpacity style={styles.checkinBtn} onPress={()=>{
-            if(textLatitud == 'WaitingForLatitud..' && textLongitud == 'WaitingForLongitud..'){
-                Alert.alert("Nu s-a conectat cu reteaua! Incercati din nou!")
-            }else{
-                if(verifyLocation(latOb, longOb,textLatitud,textLongitud)){
-                    updateVerified(userId,title)
-                    updatePoints(userId,points)
-                    Alert.alert("Felicitari! Ai castigat recompensa!")
-                    navigator.pop()
-                }else{
-                    Alert.alert("Nu trisa!")
-                }
+        <View style={styles.card}>
+            <Text style={{fontSize:32}}>Ai ajuns!</Text>
+            <Spacer/>
+            {
+                !stop?
+                <View>
+                    <Spacer/>
+                    <View>
+                        <Text>Se cauta locatia...</Text>
+                        <ActivityIndicator/>
+                    </View>
+                </View>
+                :<Text></Text>
             }
-          }}>
-            <Text>Check in!</Text>
-          </TouchableOpacity>
+            <Spacer/>
+            <TouchableOpacity style={[styles.checkinBtn,{backgroundColor:culoare}]} onPress={()=>{
+                    if(textLatitud == 'WaitingForLatitud..' && textLongitud == 'WaitingForLongitud..'){
+                        console.log(1)
+                    }else{
+                        console.log(2)
+                        if(verifyLocation(latOb, longOb,textLatitud,textLongitud)){
+                            updateVerified(userId,title)
+                            updatePoints(userId,points)
+                            Alert.alert("Felicitari! Ai castigat recompensa!")
+                            //navigator.pop()
+                            setCheck(true)
+                        }else{
+                            Alert.alert("Nu trisa!")
+                        }
+                    }
+                }}>
+                    <Text style={{fontSize:18, fontWeight:"bold"}}>Check in!</Text>
+            </TouchableOpacity>
+
+        </View>
     );
 }

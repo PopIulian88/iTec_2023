@@ -56,7 +56,8 @@ async function addUserId(mail,username,points,visited,id){
     points:points,
     visited:visited,
     photos:[],
-    id:id
+    id:id,
+    locationPh:[],
   })
 }
 // functie care creaza un nou user-ul
@@ -82,9 +83,10 @@ async function getUser(mail){
   return allDocs[0].data()
 }
 //functie care adauga o poza facuta de user in baza de date
-async function addPhotoToDB(id,url){
+async function addPhotoToDB(id,location,url){
   await updateDoc(doc(firestore,"users",id),{
-    photos:arrayUnion(url)
+    photos:arrayUnion(url),
+    locationPh:arrayUnion(location)
   })
 }
 //functie care extrage toate obiectivele turstice

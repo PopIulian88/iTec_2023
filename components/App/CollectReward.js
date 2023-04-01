@@ -1,4 +1,4 @@
-import { Image, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, Image, Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import {useState} from 'react'
 import * as ImagePicker from"expo-image-picker"
@@ -9,11 +9,17 @@ import {
     getUser,
     auth
 } from "../../firebase"
+import { useNavigation } from '@react-navigation/core'
 
 import GeolocationFnc from '../helpers/Functii/GeolocationFnc'
 import Spacer from '../helpers/Spacer'
     
 export default function CollectReward({route}){
+
+    const navigator = useNavigation()
+
+    const [check, setCheck] = useState(false)
+    const [stop, setStop] =useState(true)
 
     const [image, setImage] = useState(null)
     const [userID, setUserID] = useState("")
@@ -28,28 +34,28 @@ export default function CollectReward({route}){
     console.log(userID)
 
     //functii de incarcare poze
-
-    const pickImage = async () => {
+    const uploadImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
         const source = {uri:result.assets[0].uri}
+
         console.log(source)
+
         setImage(source)
-      }
-  
-    const uploadImage = async () => {
+
+        setStop(false)
   
         const storage = firebase.storage();
   
-        const response = await fetch(image.uri)
+        const response = await fetch(source.uri)
   
         const blob = await response.blob()
         
-        const filename = image.uri.substring(image.uri.lastIndexOf('/')+1)
+        const filename = source.uri.substring(source.uri.lastIndexOf('/')+1)
   
         const ref = storage.ref().child(filename);
         
@@ -57,31 +63,48 @@ export default function CollectReward({route}){
   
         let url = await ref.getDownloadURL();
         
-        addPhotoToDB(userID,url)
-        console.log("ok")
-        setImage(null)
+        addPhotoToDB(userID,route.params.title,url)
+        
+        setStop(true)
+        Alert.alert("Imagine inacarcata cu succes!")
+        
+        navigator.pop()
         
         
       }
   
   return (
     <View style={styles.container}>
-        <Spacer height={70}/>
-        <GeolocationFnc latOb={route.params.lat} longOb={route.params.long} title={route.params.title} points={route.params.points}/>
-        <Spacer height={70}/>
+        <Spacer height={30}/>
+        <GeolocationFnc setCheck={setCheck} latOb={route.params.lat} longOb={route.params.long} title={route.params.title} points={route.params.points}/>
+        <Spacer height={30}/>
 
-        <View style={styles.conatainerButoane}> 
-            <TouchableOpacity style={styles.selectBtn} onPress={pickImage}>
-                <Text>Selecteaza imagine</Text>
-            </TouchableOpacity>
+        {
+            check ? 
+            <View>
+                <View style={styles.containerBtnImg}> 
+                    <Image source={require("../../styles/images/folder.png")} style={{height:40,width:40}}/>
+                    <TouchableOpacity style={styles.uploadBtn} onPress={uploadImage}>
+                        <Text style={{fontSize:18,padding:5}}>Incarca imagine</Text>
+                    </TouchableOpacity>
+                <Spacer/>
+                </View>
+                    {
+                        !stop?<ActivityIndicator/>:<Text></Text>
+                    }
+            </View>
+                :
+                <View style={styles.containerBtnImg}> 
+                    <Image source={require("../../styles/images/folder.png")} style={{height:40,width:40}}/>
+                    <TouchableOpacity style={[styles.uploadBtn,{backgroundColor:"red"}]}>
+                        <Text style={{fontSize:18,padding:5}}>Incarca imagine</Text>
+                    </TouchableOpacity>
+
+                </View>
             
-            <TouchableOpacity style={styles.uploadBtn} onPress={uploadImage}>
-                <Text>Incarca imagine</Text>
-            </TouchableOpacity>
-        </View>
+        }
         <Spacer height={40}/>
-        {image!=null?<Image source={{uri:image.uri}} height={300} width={350}/>:<Text></Text>}
-
+        
         
     </View>
   )
