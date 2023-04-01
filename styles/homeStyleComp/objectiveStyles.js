@@ -10,17 +10,19 @@ const objectiveStyles = StyleSheet.create({
         width: "90%",
         borderRadius: 30,
         backgroundColor: "#AA77FF",
-        padding: 5,
+        padding: 10,
 
         flexDirection:"row",
         alignItems: "center",
-        justifyContent: "flex-start",
+        justifyContent: "space-between",
     },
 
     photoEdit: {
         height: "80%",
-        width: 80,
+        width: 130,
+        padding:15,
         resizeMode: "contain",
+        borderRadius:20
     }
 })
 

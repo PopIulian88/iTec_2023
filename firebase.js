@@ -86,6 +86,18 @@ async function addPhotoToDB(id,url){
     photos:arrayUnion(url)
   })
 }
+//functie care extrage toate obiectivele turstice
+async function getObjectives(){
+  const getObj = query(
+    collection(firestore,"objTurstice")
+  )
+
+  const querySnapshot = await getDocs(getObj)
+  const allDocs = querySnapshot.docs
+  return allDocs
+}
+
+
 export {
   //storage
   firebase,
@@ -100,5 +112,7 @@ export {
 
   addNewUser,
   getUser,
-  addPhotoToDB
+  addPhotoToDB,
+
+  getObjectives
 }

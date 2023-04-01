@@ -8,11 +8,11 @@ export default function Challenge() {
 
     return (
         <View style={challangeStyles.container}>
-            <Spacer height={50}/>
+            {/* <Spacer height={50}/>
             <ChallengeComponent/>
 
             <Spacer height={50}/>
-            <ChallengeComponent/>
+            <ChallengeComponent/> */}
 
         </View>
     )
