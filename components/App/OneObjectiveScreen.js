@@ -4,6 +4,13 @@ import Spacer from "../helpers/Spacer";
 import {Foundation, MaterialIcons} from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 import miniComponentTags from "./homeComponents/miniComponentTags";
+import { useState } from "react";
+
+import {
+    verifyVisited,
+    auth
+} from "../../firebase"
+
 
 export function useLocation(lat,long){
     if(Platform.OS == 'ios'){
@@ -14,8 +21,20 @@ export function useLocation(lat,long){
 }
 
 export default function OneObjectiveScreen({route}) {
-
+    console.log(route.params.website);
     const navigator = useNavigation()
+
+    const [verified, setVerified] = useState(false)
+    const [ok, setOK] = useState(0)
+    if(verified==false){
+        verifyVisited(auth.currentUser?.email,route.params.nameObj).then(res=>{
+            setOK(res)
+        })
+        setVerified(true)
+    
+    
+    }
+
     return (
         <ScrollView style={oneObjectiveStyles.container} showsVerticalScrollIndicator={false}>
             <Spacer height={50}/>
@@ -59,12 +78,31 @@ export default function OneObjectiveScreen({route}) {
 
             <Spacer height={30}/>
 
-            <TouchableOpacity 
-                style={oneObjectiveStyles.confirmLocEdit}
-                onPress={() => navigator.navigate("CollectRewardScreen")}
-            >
-                <Text style={{alignSelf: "center", color: "white"}}>Colecteaza recompensa!</Text>
-            </TouchableOpacity>
+            {
+    ok?
+    
+    <TouchableOpacity 
+        style={[oneObjectiveStyles.confirmLocEdit,{backgroundColor:"gray"}]}
+    >
+        
+        <Text style={{alignSelf: "center", color: "white"}}>Recompensa colectata!</Text>
+    </TouchableOpacity>
+    
+    :
+    
+    <TouchableOpacity 
+        style={oneObjectiveStyles.confirmLocEdit}
+        onPress={() => navigator.navigate("CollectRewardScreen",{
+            lat:route.params.lat,
+            long:route.params.long,
+            title:route.params.nameObj,
+            points:route.params.points
+        })}
+    >
+        
+        <Text style={{alignSelf: "center", color: "white"}}>Colecteaza recompensa!</Text>
+    </TouchableOpacity>
+}
         </ScrollView>
     )
 }

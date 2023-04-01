@@ -20,7 +20,8 @@ import {
   query,
   where,
   getDocs,
-  arrayUnion
+  arrayUnion,
+  increment
 } from "firebase/firestore"
 
 import {
@@ -96,8 +97,32 @@ async function getObjectives(){
   const allDocs = querySnapshot.docs
   return allDocs
 }
-
-
+//functie care verifica daca titlul trecut ca parametru este sau nu in lista de ob vizitate a user-ului
+async function verifyVisited(mail,titleOb){
+  const user = query(
+    collection(firestore,"users"),
+    where("mail","==",mail)
+  )
+  const querySnapshot = await getDocs(user)
+  const allDocs = querySnapshot.docs
+  let ok = 0;
+  for(let i=0;i<allDocs[0].data().visited.length;i++){
+    if(allDocs[0].data().visited[i] == titleOb){console.log("--");ok = 1;}
+  }
+  return ok;
+}
+//functie care updateaza lista de locatii vizitate
+async function updateVerified(id,text){
+  await updateDoc(doc(firestore,"users",id),{
+    visited:arrayUnion(text)
+  })
+}
+//functie care updateaza scorul userului
+async function updatePoints(id,points){
+  await updateDoc(doc(firestore,"users",id),{
+    points:increment(Number(points))
+  })
+}
 export {
   //storage
   firebase,
@@ -114,5 +139,8 @@ export {
   getUser,
   addPhotoToDB,
 
-  getObjectives
+  getObjectives,
+  verifyVisited,
+  updateVerified,
+  updatePoints,
 }
