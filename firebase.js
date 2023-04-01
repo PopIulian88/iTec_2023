@@ -54,6 +54,7 @@ async function addUserId(mail,username,points,visited,id){
     mail:mail,
     points:points,
     visited:visited,
+    photos:[],
     id:id
   })
 }
@@ -64,6 +65,7 @@ async function addNewUser(username, mail){
     mail:mail,
     points:0,
     visited:[],
+    photos:[],
     id:""
   }).then(res=>addUserId(mail,username,0,[],res.id))
   
