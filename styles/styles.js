@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         width:"100%",
-        backgroundColor: "#B0DAFF",
     },
     entryScreenLogo:{
         height:150,

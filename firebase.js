@@ -1,4 +1,6 @@
-import { initializeApp } from "firebase/app";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/storage';
+//import { initializeApp } from "firebase/app";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   getAuth,
@@ -14,7 +16,11 @@ import {
   addDoc,
   collection,
   doc,
-  updateDoc
+  updateDoc,
+  query,
+  where,
+  getDocs,
+  arrayUnion
 } from "firebase/firestore"
 
 import {
@@ -32,7 +38,7 @@ const firebaseConfig = {
   measurementId: "G-YXXRKBHWCY"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage)
 });
@@ -40,6 +46,7 @@ const firestore = getFirestore()
 
 const userCollection = collection(firestore, "users")
 
+//functie care updateaza id-ul user-ului
 async function addUserId(mail,username,points,visited,id){
 
   await updateDoc(doc(firestore,"users",id),{
@@ -50,6 +57,7 @@ async function addUserId(mail,username,points,visited,id){
     id:id
   })
 }
+// functie care creaza un nou user-ul
 async function addNewUser(username, mail){
   const newUser = await addDoc(userCollection,{
     username:username,
@@ -60,8 +68,26 @@ async function addNewUser(username, mail){
   }).then(res=>addUserId(mail,username,0,[],res.id))
   
 }
-
+//functie care extrage datele user-ului
+async function getUser(mail){
+  const user = query(
+    collection(firestore,"users"),
+    where("mail","==",mail)
+  )
+  const querySnapshot = await getDocs(user)
+  const allDocs = querySnapshot.docs
+  return allDocs[0].data()
+}
+//functie care adauga o poza facuta de user in baza de date
+async function addPhotoToDB(id,url){
+  await updateDoc(doc(firestore,"users",id),{
+    photos:arrayUnion(url)
+  })
+}
 export {
+  //storage
+  firebase,
+
   //functii pt autentificare
   auth,
   createUserWithEmailAndPassword,
@@ -70,5 +96,7 @@ export {
   signOut,
   getAuth,
 
-  addNewUser
+  addNewUser,
+  getUser,
+  addPhotoToDB
 }
