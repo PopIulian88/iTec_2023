@@ -1,35 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import {styles} from "../../styles/styles"
-import { TouchableOpacity } from 'react-native'
-import {useNavigation} from "@react-navigation/core"
+import {homeStyles} from "../../styles/homeStyles"
 
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import Challenge from "./Challenge";
+import Objective from "./Objective";
+import Profile from "./Profile";
 
-import {
-    signOut,
-    auth
-}from "../../firebase"
+const Tab = createBottomTabNavigator();
 
 export default function Home() {
-
-    const navigation = useNavigation()
-    const handleSignOut = () => {
-        signOut(auth)
-        .then(() => {
-            console.log("Logged of" )
-            navigation.replace("AuthScreen")
-        })
-        .catch(err => alert(err))
-    }
-
   return (
-    <View style={styles.container}>
-      <Text>Home</Text>
-      <TouchableOpacity onPress={
-        handleSignOut
-      }>
-        <Text>Logout</Text>
-      </TouchableOpacity>
-    </View>
+
+      <Tab.Navigator  screenOptions={homeStyles.navigator} tabBarOptions={homeStyles.tabBarOptions}>
+          <Tab.Screen name={"Challenge"} component={Challenge} options={homeStyles.challengeOption}/>
+          <Tab.Screen name={"Objective"} component={Objective} options={homeStyles.objectiveption}/>
+          <Tab.Screen name={"Profile"} component={Profile} options={homeStyles.profileOption}/>
+
+      </Tab.Navigator>
   )
 }
