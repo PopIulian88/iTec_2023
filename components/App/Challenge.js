@@ -6,7 +6,7 @@ export default function Challenge() {
 
     return (
         <View style={challangeStyles.container}>
-            <Text>WELCOME</Text>
+            <Text style={{fontSize: 32, fontWeight: 'bold'}}>WELCOME</Text>
 
         </View>
     )

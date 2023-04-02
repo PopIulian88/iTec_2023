@@ -14,7 +14,7 @@ import {LinearGradient} from "expo-linear-gradient";
 
 
 export function useLocation(lat,long){
-    if(Platform.OS == 'ios'){
+    if(Platform.OS === 'ios'){
         return Linking.openURL('maps://app?daddr='+lat+'+'+long)
     }else{
         return Linking.openURL('google.navigation:q='+lat+'+'+long)
@@ -27,7 +27,7 @@ export default function OneObjectiveScreen({route}) {
 
     const [verified, setVerified] = useState(false)
     const [ok, setOK] = useState(0)
-    if(verified==false){
+    if(verified===false){
         verifyVisited(auth.currentUser?.email,route.params.nameObj).then(res=>{
             setOK(res)
         })
@@ -54,7 +54,7 @@ export default function OneObjectiveScreen({route}) {
                 <View style={{flex: 2, flexDirection: "row"}}>
                     <View style={{flex: 2, justifyContent: "center"}}>
                         <Text style={{color: "#fbb040", fontWeight: "bold", fontSize: 24}}> Reward:</Text>
-                        <Text style={{color: "#fbb040", fontWeight: "bold", fontSize: 32}}>  {route.params.score}</Text>
+                        <Text style={{color: "#fbb040", fontWeight: "bold", fontSize: 32}}>  {route.params.points}</Text>
                     </View>
                     <View style={{flex:1, alignSelf: "center", justifyContent: "center"}}>
                         <Image style={{height: "100%", width: "100%"}} source={require("../../styles/images/cupitza.png")}/>

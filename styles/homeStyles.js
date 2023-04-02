@@ -7,6 +7,7 @@ const homeStyles = StyleSheet.create({
         inactiveTintColor: 'lightgray',
         activeBackgroundColor: "#ffffff",
         inactiveBackgroundColor: '#ffffff',
+
     },
 
     challengeOption: {

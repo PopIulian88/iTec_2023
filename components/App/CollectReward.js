@@ -70,12 +70,11 @@ export default function CollectReward({route}){
         
         navigator.pop()
         
-        
       }
   
   return (
     <View style={styles.container}>
-        <Spacer height={30}/>
+        <Spacer height={50}/>
         <GeolocationFnc setCheck={setCheck} latOb={route.params.lat} longOb={route.params.long} title={route.params.title} points={route.params.points}/>
         <Spacer height={30}/>
 
@@ -96,15 +95,16 @@ export default function CollectReward({route}){
                 :
                 <View style={styles.containerBtnImg}> 
                     <Image source={require("../../styles/images/folder.png")} style={{height:40,width:40}}/>
-                    <TouchableOpacity style={[styles.uploadBtn,{backgroundColor:"red"}]}>
+                    <TouchableOpacity style={[styles.uploadBtn,{backgroundColor:"gray"}]}>
                         <Text style={{fontSize:18,padding:5}}>Incarca imagine</Text>
                     </TouchableOpacity>
 
                 </View>
-            
+
         }
-        <Spacer height={40}/>
-        
+
+        <Spacer height={30}/>
+        <Text>   Pentru a incarca o imagine este necesara completarea locatiei</Text>
         
     </View>
   )

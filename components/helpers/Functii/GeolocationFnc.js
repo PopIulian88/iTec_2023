@@ -73,7 +73,7 @@ export default function Geolocation({setCheck, latOb, longOb, title, points}) {
 
     return (
         <View style={styles.card}>
-            <Text style={{fontSize:32}}>Ai ajuns!</Text>
+            <Text style={{fontSize:32}}>Felicitari!</Text>
             <Spacer/>
             {
                 !stop?
@@ -105,7 +105,7 @@ export default function Geolocation({setCheck, latOb, longOb, title, points}) {
                 }}>
                     <Text style={{fontSize:18, fontWeight:"bold"}}>Check in!</Text>
             </TouchableOpacity>
-
+            <Spacer height={50}/>
         </View>
     );
 }

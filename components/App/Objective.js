@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from 'react-native'
+import {ScrollView, Text, View} from 'react-native'
 import {useState} from 'react'
 import {objectiveStyles} from "../../styles/homeStyleComp/objectiveStyles";
 import Spacer from "../helpers/Spacer";
@@ -39,6 +39,13 @@ export default function Objective() {
             <Spacer height={50}/>
 
             <ScrollView contentContainerStyle={{width:"100%"}} showsVerticalScrollIndicator={false}>
+                <View style={{alignItems: "center", justifyContent: "center", padding: 20}}>
+                    <Text style={{fontSize: 32}}>Hello!</Text>
+                    <Text style={{fontSize: 24}}>What are you up to do today?</Text>
+                </View>
+
+                <Spacer/>
+
                 {
                     objectives.map(obj=>{
                         return(

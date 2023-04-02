@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
     username:{
         fontSize:48,
-        color: "#00235B",
+        color: "black",
     }
 })
 
